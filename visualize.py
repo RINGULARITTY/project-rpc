@@ -1,7 +1,11 @@
 import fileinput
 import math
 import argparse
+import os
+import platform
+import subprocess
 import sys
+import tempfile
 
 
 class Rgb:
@@ -129,6 +133,15 @@ def voxel(x0, y0, z0, x1, y1, z1, color):
             path(face_a, fill=color.lighten(50 / 100))
     )
 
+def open_file_default(file_path):
+    system_platform = platform.system()
+
+    if system_platform == 'Windows':
+        os.startfile(file_path)
+    elif system_platform == 'Darwin':  # For macOS
+        subprocess.Popen(['open', file_path])
+    else:  # For Linux or other Unix-based systems
+        subprocess.Popen(['xdg-open', file_path])
 
 COLORS = [
     rgb(201, 167, 57),
@@ -158,10 +171,10 @@ COLORS = [
     rgb(207, 160, 106)
 ]
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser("visualize.py")
-    parser.add_argument('infile', nargs='?', type=argparse.FileType('r'), default=sys.stdin)
-    parser.add_argument("--truck-no", type=int, default=0, dest="truck_no")
+    parser.add_argument("input", nargs="?", type=argparse.FileType("r"), default=sys.stdin, help="Le fichier d'entrée (utilise stdin par défaut)")
+    parser.add_argument("--truck-no", type=int, default=0, dest="truck_no", help="Le numéro du véhicule à visualiser")
 
     args = parser.parse_args()
 
@@ -170,7 +183,7 @@ if __name__ == '__main__':
     blocks = []
     first = True
     i = 0
-    for (i, line) in enumerate(args.infile):
+    for (i, line) in enumerate(args.input):
         if first:
             first = False
             if line == "SAT\n":
@@ -190,4 +203,9 @@ if __name__ == '__main__':
     for (i, (x0, y0, z0, x1, y1, z1)) in blocks:
         svg_content.append(voxel(x0, y0, z0, x1, y1, z1, COLORS[i % len(COLORS)]))
     svg_content.append("</svg>")
-    open("output.svg", "w").write("\n".join(svg_content) + "\n")
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
+        f.write("\n".join(svg_content) + "\n")
+        output = f.name
+
+    open_file_default(output)
