@@ -40,10 +40,11 @@ class Dimension:
             raise IndexError("Dimension index out of range")
 
 
-MIN_TRUCK_DIMENSIONS = Dimension("20x20x20")
-MAX_TRUCK_DIMENSIONS = Dimension("400x210x220")
+MIN_TRUCK_DIMENSIONS = Dimension("500x200x200")
+MAX_TRUCK_DIMENSIONS = Dimension("800x350x450")
 MIN_ITEM_DIMENSIONS = Dimension("10x10x10")
-MAX_ITEM_DIMENSIONS = Dimension("500x500x500")
+MAX_ITEM_DIMENSIONS = Dimension("250x250x250")
+FILE_NAME = "input"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("generate.py")
@@ -53,6 +54,8 @@ if __name__ == "__main__":
                         dest="max_truck_dimensions", help="Dimensions maximales des véhicules")
     parser.add_argument("--max-item-dimensions", type=Dimension, default=MAX_ITEM_DIMENSIONS,
                         dest="max_item_dimensions", help="Dimensions maximales des objets")
+    parser.add_argument("--filename", type=str, default=FILE_NAME,
+                        dest="filename", help="Filename")
 
     args = parser.parse_args()
     seed = args.seed
@@ -69,12 +72,18 @@ if __name__ == "__main__":
     (L1_min, W1_min, Z1_min) = MIN_TRUCK_DIMENSIONS
     (L1_max, W1_max, Z1_max) = args.max_truck_dimensions
     assert L1_max <= MAX_TRUCK_DIMENSIONS.x and W1_max <= MAX_TRUCK_DIMENSIONS.y and Z1_max <= MAX_TRUCK_DIMENSIONS.z
-    print(*generate_vehicle([L1_min, L1_max], [W1_min, W1_max], [Z1_min, Z1_max]))
+    vehicle_size = generate_vehicle([L1_min, L1_max], [W1_min, W1_max], [Z1_min, Z1_max])
 
     (L2_min, W2_min, Z2_min) = MIN_ITEM_DIMENSIONS
     (L2_max, W2_max, Z2_max) = args.max_item_dimensions
     assert L2_max <= MAX_ITEM_DIMENSIONS.x and W2_max <= MAX_ITEM_DIMENSIONS.y and Z2_max <= MAX_ITEM_DIMENSIONS.z
     nb_items = prng_range(1, max_nb_items + 1)
-    print(nb_items)
+    
+    items_size = []
     for i in range(nb_items):
-        print(*generate_item([L2_min, L2_max], [W2_min, W2_max], [Z2_min, Z2_max], [-1, max_delivery_time]))
+        items_size.append(generate_item([L2_min, L2_max], [W2_min, W2_max], [Z2_min, Z2_max], [-1, max_delivery_time]))
+
+    with open(FILE_NAME, "w") as f:
+        f.write(" ".join([str(size) for size in vehicle_size]) + "\n")
+        f.write(str(nb_items) + "\n")
+        f.write("\n".join([" ".join([str(size) for size in item_size[:3]]) for item_size in items_size]))

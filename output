@@ -1,0 +1,14 @@
+SAT
+0 0 0 10 10 10 20
+
+Camion
+Size (X, Y, Z)
+
+Piece
+Position p1 (x, y, z)
+Distance between p1 and p2 (dx, dy, dz)
+Size (sx, sy, sz)
+
+(x, y, z) >= 0
+(sx, sy, sz) in (dx, dy, dz)
+(x+dx, y+dy, z+dz) <= (X, Y, Z)
