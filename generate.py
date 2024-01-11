@@ -40,10 +40,10 @@ class Dimension:
             raise IndexError("Dimension index out of range")
 
 
-MIN_TRUCK_DIMENSIONS = Dimension("500x200x200")
-MAX_TRUCK_DIMENSIONS = Dimension("800x350x450")
+MIN_TRUCK_DIMENSIONS = Dimension("200x100x100")
+MAX_TRUCK_DIMENSIONS = Dimension("350x200x200")
 MIN_ITEM_DIMENSIONS = Dimension("10x10x10")
-MAX_ITEM_DIMENSIONS = Dimension("250x250x250")
+MAX_ITEM_DIMENSIONS = Dimension("200x200x200")
 FILE_NAME = "input"
 
 if __name__ == "__main__":

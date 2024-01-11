@@ -9,6 +9,9 @@ Position p1 (x, y, z)
 Distance between p1 and p2 (dx, dy, dz)
 Size (sx, sy, sz)
 
+Intérieur du camion
 (x, y, z) >= 0
-(sx, sy, sz) in (dx, dy, dz)
 (x+dx, y+dy, z+dz) <= (X, Y, Z)
+
+Rotation
+(rx, ry, rz)

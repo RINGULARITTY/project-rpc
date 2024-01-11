@@ -1,44 +1,42 @@
-# Projet RPC
+# Truck - Package optimization problem
 
-## Description
+We've modeled this problem and use a MILP python solver (Pulp)
 
-Vous êtes responsable de la logistique au Service d′Acheminement National dédié au Trans-
-port d′Articles de la Compagnie Logistique Aérienne Ultra Spéciale. Vous disposez de plusieurs
-véhicules spécialisés (Technologies de Roulage Avancées, Innovantes et Novatrices pour En-
-gins Autonomes Urbains) de capacités différentes et d′une liste d′articles à livrer à différentes
-adresses. Votre objectif est d′optimiser la répartition des colis dans les véhicules pour minimiser
-le nombre de véhicules utilisés tout en respectant les capacités de charge maximale de chaque
-véhicules.
+<table>
+  <tr>
+    <td colspan="2" style="text-align: center;"><h3>Model specifications</h3></td>
+  </tr>
+  <tr>
+    <td><h4>✅ Can</h4></td>
+    <td><h4>❌ Can't</h4></td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <ul>
+        <b><li>Packages Position</li>
+        <li>Parallelepiped Rectangle Packages</li>
+        <li>Overlap</li>
+        <li>Truck Size</li>
+        <li>Maximize Packages amount (weight tunable)</li>
+        <li>Maximize Packages size (weight tunable)</li>
+        <li>Packages Rotation</li></b>
+      </ul>
+    </td>
+    <td valign="top">
+      <ul>
+        <b><li>Maximize large empty space</li>
+        <li>Levitating packages</li>
+        <li>Multiple Trucks</li>
+        <li>Delivery order</li>
+        <li>Real physics with weight (small package can carry a huge package</li>
+        <li>Fragile packages</li>
+        <li>Not Parallelepiped Rectangle Packages</li></b>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-La description complète du projet est disponible sur Moodle [sujet.pdf](https://moodle.epita.fr/mod/resource/view.php?id=41270).
+It also offers a visualization of the output :
 
-## Outils
-
-Ce répertoire contient les outils suivants :
-- `generate.py` : générateur de données d’entrée
-- `visualize.py` : visualisateur de données de sortie
-
-### `generate.py`
-
-Permet de gérénérer des données d'entrée pour le projet pour les trois leagues (bronze, silver et gold).
-
-Utiliser la commande :
-
-```bash
-python3 generate.py --help
-```
-
-Pour voir comment l’utiliser.
-
-### `visualize.py`
-
-Permet de visualiser les données de sortie du projet.
-
-Utiliser la commande :
-
-```bash
-python3 visualize.py --help
-```
-
-Pour voir comment l’utiliser.
-
+<img src="./exemple_1.png"/>
+<img src="./exemple_2.png"/>
